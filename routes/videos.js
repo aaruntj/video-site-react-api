@@ -5,20 +5,60 @@ const fs = require("fs")
 const { v4: uuidv4 } = require("uuid")
 
 
-// const allVideoDetails = JSON.parse(fs.readFileSync("data/video-details.json"))
 
 function getAllVideoDetails() {
+
+  // NON LOCAL ASYNC METHOD (MUST BE CHANGED TO ASYNC FUNCTION)
+  // const response = await fetch(url, settings)
+  // const body = await response.json()
+  // return body
+
+  // NON LOCAL METHOD (NO ASYNC FUNCTION)
+  // return fetch(url, settings)
+  //   .then(res => res.json())
+  //   .then(response => {
+  //     return response
+  //   })
+
+  // LOCAL METHOD
   return JSON.parse(fs.readFileSync("data/video-details.json"))
 }
 
+// regular console log
+// console.log(getAllVideoDetails())
+
+// ASYNC CONSOLE LOG
+// getAllVideoDetails().then(res => console.log(res))
+
 router.get("/",(req,res) => {
   console.log("all videos load")
-  // const allVideoDetails = getVideoData("data/video-details.json")
+
+  // NON LOCAL ASYNC METHOD (MUST BE CHANGED TO ASYNC FUNCTION)
+  // const videoDetails = await getAllVideoDetails()
+  // res.json(videoDetails)
+
+
+  // NON LOCAL METHOD (NO ASYNC FUNCTION)
+  // getAllVideoDetails()
+  // .then(response => {
+  //   res.json(response)
+  // })
+  // .catch(error => {
+  //   console.log("error: ",error)
+  // })
+
+  // LOCAL METHOD
   res.json(getAllVideoDetails())
 })
 
 router.get("/:id",(req,res) => {
   console.log("single video load")
+
+  // NON LOCAL ASYNC METHOD (MUST BE CHANGED TO ASYNC FUNCTION)
+  // const singleVideoDetails = await getAllVideoDetails()
+  // res.json(singleVideoDetails.find(video => video.id === req.params.id))
+
+  // LOCAL METHOD
   const singleVideoDetails = getAllVideoDetails().find(video => video.id === req.params.id);
   res.json(singleVideoDetails)
 })
